@@ -59,7 +59,7 @@ export default function PhotoList() {
   }, [loading, hasMore, page, fetchPhotos, setPage]);
 
   return (
-    <div sx={{ py: 4 }}>
+    <div style={{ paddingTop: "16px"}}>
       <Grid container spacing={2} justifyContent="center">
         {photos.map((photo, index) => (
           <Grid key={`${photo.id}-${index}`} item xs={12} sm={6} md={3}>

@@ -1,232 +1,191 @@
-import { useParams, useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {Box,  Typography, Button, Container } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Container,
+  Divider,
+} from "@mui/material";
 import Loader from "../components/Loader";
-import { ArrowLeft, Download, Share2 } from "lucide-react"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import DownloadIcon from "@mui/icons-material/Download";
+import ShareIcon from "@mui/icons-material/Share";
+import "./PhotoDetail.css";
 
 export default function PhotoDetail() {
-    const { id } = useParams();
-    const [photo, setPhoto] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchPhoto = async () => {
-            try {
-                const res = await axios.get(`https://picsum.photos/id/${id}/info`);
-                setPhoto(res.data);
-            } catch {
-                setPhoto(null);
-            }
-            finally {
-                setLoading(false);
-            }
-        };
-        fetchPhoto();
-    }, [id]);
+  // Fetch photo info
+  useEffect(() => {
+    const fetchPhoto = async () => {
+      try {
+        const res = await axios.get(`https://picsum.photos/id/${id}/info`);
+        setPhoto(res.data);
+      } catch {
+        setPhoto(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPhoto();
+  }, [id]);
 
-    if (loading) return <Loader />;
-    if (!photo) return (
-        <Container sx={{ py: 4, textAlign: 'center' }}>
-            <Typography variant="h6" gutterBottom>
-                Photo not found.
-            </Typography>   
-            <Button
-                variant="text"
-                startIcon={<ArrowLeft size={20} />}
-                sx={{
-                    color: "#1a1a1a",
-                    textTransform: "none",
-                    fontSize: "0.95rem",
-                    padding: "8px 12px",
-                    "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.05)",
-                    },
-                }}
-                onClick={() => {
-                    if (window.history.state && window.history.state.idx > 0) {
-                    navigate(-1);
-                    } else {
-                    navigate("/photos");
-                    }
-                }}
-                >
-                Back to Gallery
-            </Button>
-        </Container>
-    );
+  if (loading) return <Loader />;
+
+  if (!photo)
     return (
-        <div sx={{ py: 4 }}>
-            <Button
-                variant="text"
-                startIcon={<ArrowLeft size={20} />}
-                sx={{
-                    color: "#1a1a1a",
-                    textTransform: "none",
-                    fontSize: "0.95rem",
-                    padding: "8px 12px",
-                    "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.05)",
-                    },
-                }}
-                onClick={() => {
-                    if (window.history.state && window.history.state.idx > 0) {
-                    navigate(-1);
-                    } else {
-                    navigate("/photos");
-                    }
-                }}
-                >
-                Back to Gallery
-            </Button>
-
-            <Box
-                sx={{
-                mb: 6,
-                borderRadius: "16px",
-                overflow: "hidden",
-                boxShadow: "0 20px 60px rgba(0, 0, 0, 0.12)",
-                backgroundColor: "#f5f5f5",
-                aspectRatio: "16/10",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                }}
-            >
-                <img
-                src={photo.download_url || "/placeholder.svg"}
-                alt={photo.author}
-                style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                }}
-                />
-            </Box>
-            <Box sx={{ mb: 6 }}>
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 700,
-            mb: 2,
-            fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.8rem" },
-            color: "#1a1a1a",
-            letterSpacing: "-0.5px",
-          }}
-        >
-          Photo #{photo.id}
+      <Container className="photo-detail__container">
+        <Typography variant="h6" gutterBottom>
+          Photo not found.
         </Typography>
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={() =>
+            window.history.state && window.history.state.idx > 0
+              ? navigate(-1)
+              : navigate("/photos")
+          }
+          className="photo-detail__back-btn"
+        >
+          Back to Gallery
+        </Button>
+      </Container>
+    );
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3, mb: 4, flexWrap: "wrap" }}>
-          <Box>
-            <Typography
-              variant="body2"
-              sx={{
-                color: "#666",
-                fontSize: "0.85rem",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                mb: 0.5,
-              }}
-            >
-              Photographer
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 600,
-                color: "#1a1a1a",
-                fontSize: "1.1rem",
-              }}
-            >
-              {photo.author}
-            </Typography>
-          </Box>
+  return (
+    <div >
+      <Button
+        startIcon={<ArrowBackIcon />}
+        onClick={() =>
+          window.history.state && window.history.state.idx > 0
+            ? navigate(-1)
+            : navigate("/photos")
+        }
+        className="photo-detail__back-btn"
+      >
+        Back to Gallery
+      </Button>
 
-          <Box sx={{ width: "1px", height: "40px", backgroundColor: "#ddd" }} />
-
-          <Box>
-            <Typography
-              variant="body2"
-              sx={{
-                color: "#666",
-                fontSize: "0.85rem",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                mb: 0.5,
-              }}
-            >
-              Dimensions
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 600,
-                color: "#1a1a1a",
-                fontSize: "1.1rem",
-              }}
-            >
-              {photo.width} × {photo.height}
-            </Typography>
-          </Box>
+      {/* Main: image and info side-by-side (responsive) */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 4,
+          alignItems: "flex-start",
+        }}
+      >
+        {/* Photo Section */}
+        <Box
+          className="photo-detail__image-wrapper"
+          sx={{ flex: 1, minWidth: 0 }}
+        >
+          <img
+            src={photo.download_url}
+            alt={photo.author}
+            className="photo-detail__image"
+            style={{ width: "100%", height: "auto", borderRadius: 8 }}
+          />
         </Box>
 
-        <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-          <Button
-            variant="contained"
-            startIcon={<Download size={20} />}
-            href={photo.download_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              backgroundColor: "#1a1a1a",
-              color: "#fff",
-              textTransform: "none",
-              fontSize: "0.95rem",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                backgroundColor: "#333",
-                transform: "translateY(-2px)",
-                boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
-              },
-            }}
-          >
-            Download
-          </Button>
+        {/* Info Section */}
+        <Box
+          className="photo-detail__info"
+          sx={{ width: { xs: "100%", md: "30%" } }}
+        >
+          <Typography variant="h4" className="photo-detail__title">
+            Photo #{photo.id}
+          </Typography>
 
-          <Button
-            variant="outlined"
-            startIcon={<Share2 size={20} />}
-            onClick={() => {
-              if (navigator.share) {
-                navigator.share({
-                  title: `Photo by ${photo.author}`,
-                  text: `Check out this beautiful photo!`,
-                  url: window.location.href,
-                })
-              }
-            }}
-            sx={{
-              color: "#1a1a1a",
-              borderColor: "#ddd",
-              textTransform: "none",
-              fontSize: "0.95rem",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                borderColor: "#1a1a1a",
-                backgroundColor: "rgba(0, 0, 0, 0.02)",
-              },
-            }}
-          >
-            Share
-          </Button>
+          <Divider className="photo-detail__divider" sx={{ my: 2 }} />
+
+          <Box className="photo-detail__meta">
+            <Box className="photo-detail__meta-item" sx={{ mb: 2 }}>
+              <Typography
+                variant="body2"
+                className="photo-detail__meta-label"
+                color="text.secondary"
+              >
+                Photographer
+              </Typography>
+              <Typography
+                variant="h6"
+                className="photo-detail__meta-value"
+                sx={{ wordBreak: "break-word" }}
+              >
+                {photo.author}
+              </Typography>
+            </Box>
+
+            <Box className="photo-detail__meta-item" sx={{ mb: 2 }}>
+              <Typography
+                variant="body2"
+                className="photo-detail__meta-label"
+                color="text.secondary"
+              >
+                Dimensions
+              </Typography>
+              <Typography variant="h6" className="photo-detail__meta-value">
+                {photo.width} × {photo.height}
+              </Typography>
+            </Box>
+
+            <Box className="photo-detail__meta-item">
+              <Typography
+                variant="body2"
+                className="photo-detail__meta-label"
+                color="text.secondary"
+              >
+                Description
+              </Typography>
+              <Typography
+                variant="body1"
+                className="photo-detail__meta-desc"
+                color="text.secondary"
+              >
+                No description available.
+              </Typography>
+            </Box>
+            <Box className="photo-detail__actions">
+              <Button
+                variant="contained"
+                startIcon={<DownloadIcon />}
+                href={photo.download_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="photo-detail__btn-download"
+              >
+                Download
+              </Button>
+
+              <Button
+                variant="outlined"
+                startIcon={<ShareIcon />}
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: `Photo by ${photo.author}`,
+                      text: "Check out this beautiful photo!",
+                      url: window.location.href,
+                    });
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied to clipboard!");
+                  }
+                }}
+                className="photo-detail__btn-share"
+              >
+                Share
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </div>
-    );  
+  );
 }

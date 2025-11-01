@@ -6,9 +6,14 @@ export default function Layout() {
     <Box sx={{ minHeight: '100vh', bgcolor: '#f5f5f5' }}>
       <Box 
         sx={{ 
-            backgroundImage: 'linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)',
-            color: 'white',
-            py: 3,
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 1000,
+          backgroundImage: 'linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)',
+          color: 'white',
+            py: 1.5,
             boxShadow: '0 6px 18px rgba(37,117,252,0.18)',
         }}
       >
@@ -18,8 +23,10 @@ export default function Layout() {
           </Typography>
         </Container>
       </Box>
-      
-      <Container maxWidth="xl" sx={{ py: 4 }}>
+
+        
+
+      <Container maxWidth="xl" sx={{ py: 2}}>
         <Outlet />
       </Container>
     </Box>
