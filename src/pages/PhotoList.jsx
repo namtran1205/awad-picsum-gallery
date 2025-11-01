@@ -62,7 +62,7 @@ export default function PhotoList() {
     <div style={{ paddingTop: "16px"}}>
       <Grid container spacing={2} justifyContent="center">
         {photos.map((photo, index) => (
-          <Grid key={`${photo.id}-${index}`} item xs={12} sm={6} md={3}>
+          <Grid key={`${photo.id}-${index}`} item xs={12} sm={6} md={3} lg={3} xl={3}>
             <PhotoCard photo={photo} />
           </Grid>
         ))}

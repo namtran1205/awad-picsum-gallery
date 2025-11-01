@@ -58,7 +58,7 @@ export default function PhotoDetail() {
     );
 
   return (
-    <div >
+    <div className="photo-detail__container">
       <Button
         startIcon={<ArrowBackIcon />}
         onClick={() =>
