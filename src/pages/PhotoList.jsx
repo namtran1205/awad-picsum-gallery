@@ -10,6 +10,7 @@ export default function PhotoList() {
   const [loading, setLoading] = useState(false);
   const loaderRef = useRef();
 
+  // Fetch photos function
   const fetchPhotos = useCallback(
     async (pageNum) => {
       try {

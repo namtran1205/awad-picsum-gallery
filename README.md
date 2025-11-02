@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# Picsum Gallery
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive photo gallery web application built with React and Material-UI, featuring infinite scroll and detailed photo views.
+
+## Features
+
+- 📸 **Photo Gallery**: Browse beautiful random photos from Lorem Picsum API
+- ♾️ **Infinite Scroll**: Automatically loads more photos as you scroll
+- 🔍 **Photo Details**: View high-resolution images with photographer information
+
+## Tech Stack
+
+- **React** (v19.2.0) - UI framework
+- **React Router** (v7.9.5) - Client-side routing
+- **Material-UI** (v7.3.4) - Component library
+- **Axios** (v1.13.1) - HTTP client
+- **Lorem Picsum API** - Photo source
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/namtran1205/awad-picsum-gallery.git picsum-gallery
+cd picsum-gallery
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm start
+```
+
+The app will open at [http://localhost:3000](http://localhost:3000)
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start` - Run development server
+- `npm build` - Create production build
+- `npm test` - Run tests
+- `npm eject` - Eject from Create React App (one-way operation)
 
-### `npm start`
+## Project Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+picsum-gallery/
+├── src/
+│   ├── components/
+│   │   ├── Layout.jsx         # Main layout wrapper
+│   │   ├── Loader.jsx         # Loading spinner
+│   │   ├── PhotoCard.jsx      # Photo card component
+│   │   └── PhotoCard.css      # PhotoCard styles
+│   ├── pages/
+│   │   ├── PhotoList.jsx      # Gallery page with infinite scroll
+│   │   ├── PhotoDetail.jsx    # Individual photo detail page
+│   │   └── PhotoDetail.css    # PhotoDetail styles
+│   ├── context/
+│   │   └── PhotoContext.jsx   # Global state management
+│   ├── App.jsx                # Main app component
+│   └── index.js               # App entry point
+└── package.json
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Key Components
 
-### `npm test`
+### PhotoList
+- Displays photos in a responsive grid layout
+- Implements infinite scroll using Intersection Observer
+- Manages photo state through Context API
+- Shows loader while fetching new photos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### PhotoDetail
+- Displays full-size photo with metadata
+- Shows photographer name and image dimensions
+- Provides download and share functionality
+- Responsive layout with side-by-side info on desktop
 
-### `npm run build`
+### PhotoCard
+- Reusable card component for each photo
+- Hover animations and transitions
+- Links to detailed photo view
+- Optimized image loading
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Layout
+- Fixed gradient header with site title
+- Consistent spacing and max-width container
+- Wraps all page content
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## API Integration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Uses the [Lorem Picsum API](https://picsum.photos/) for fetching photos:
 
-### `npm run eject`
+- **List endpoint**: `https://picsum.photos/v2/list?page={page}&limit={limit}`
+- **Photo info**: `https://picsum.photos/id/{id}/info`
+- **Image URL**: `https://picsum.photos/id/{id}/{width}/{height}`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## State Management
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Global state managed with React Context API:
+- `photos`: Array of loaded photos
+- `page`: Current page number
+- `hasMore`: Whether more photos are available
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Styling
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Material-UI `sx` props for component-level styles
+- Custom CSS files for complex styling
+- BEM naming convention for CSS classes
+- Responsive breakpoints: xs, sm, md, lg, xl
 
-## Learn More
+## Browser Support
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
 
-### Code Splitting
+This project is open source and available under the MIT License.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Acknowledgments
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Photos provided by [Lorem Picsum](https://picsum.photos/)
+- Built with [Create React App](https://create-react-app.dev/)
+- UI components from [Material-UI](https://mui.com/)
